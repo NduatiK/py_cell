@@ -1,0 +1,52 @@
+# Untitled notebook
+
+```elixir
+Mix.install([
+  {:py_cell, path: "~/py_cell"}
+])
+```
+
+## Section
+
+<!-- livebook:{"attrs":{"function_name":"add","python_code":"def add(a, b):\n  return a + b"},"kind":"Elixir.PyCell","livebook_object":"smart_cell"} -->
+
+```elixir
+PyCell.open_port("add", "def add(a, b):\n  return a + b")
+```
+
+```elixir
+require PyCell
+PyCell.run("add", [1, 2])
+```
+
+<!-- livebook:{"attrs":{"function_name":"sub","python_code":"def sub(a, b):\n  return a - b\n"},"kind":"Elixir.PyCell","livebook_object":"smart_cell"} -->
+
+```elixir
+PyCell.open_port("sub", "def sub(a, b):\n  return a - b\n")
+```
+
+## Is it fast?
+
+No, not at all. In the simple benchmark below, subtracting 100K numbers in Python takes 300x longer than in Elixir. So this only makes sense when the operations would be much faster in Python.
+
+A great place for this is when doing matrix multiplication. Numpy is sometimes faster than Nx and can handle numpy archives that contain strings.
+
+```elixir
+:timer.tc(fn ->
+  for _ <- 1..100_000 do
+    PyCell.run("sub", [1, 2])
+  end
+end)
+|> elem(0)
+|> then(&(&1 / 1_000_000))
+```
+
+```elixir
+:timer.tc(fn ->
+  for _ <- 1..100_000 do
+    1 - 2
+  end
+end)
+|> elem(0)
+|> then(&(&1 / 1_000_000))
+```
