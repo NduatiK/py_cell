@@ -94,6 +94,7 @@ defmodule PyCell do
     IO.puts(
       """
       Run the \"#{function_name}\" function by running:
+
       require PyCell
       PyCell.run(\"#{function_name}\", <args>)
       """
@@ -190,7 +191,8 @@ defmodule PyCell do
         try:
           result = #{function_name}(*msg)
           write_result(output_f, result)
-        except:
+        except Exception as err:
+          sys.stderr.write(f"PyCell Error: {err}\\n")
           write_result(output_f, ":error")
 
     """
