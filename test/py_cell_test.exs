@@ -8,7 +8,7 @@ defmodule PyCellTest do
 
   setup :configure_livebook_bridge
 
-  test "supplies its hardcoded source" do
+  test "provides a default python script" do
     default_source = """
     def add(a, b):
       return a + b
@@ -18,7 +18,12 @@ defmodule PyCellTest do
 
     escaped_default_source = Jason.encode!(default_source)
 
-    assert source == "PyCell.open_port(\"add\", #{escaped_default_source})"
+    assert source ==
+             """
+             require PyCell
+             PyCell.open_port("add", #{escaped_default_source})
+             """
+             |> String.trim_trailing()
   end
 
   test "gives instructions to the user" do
@@ -30,12 +35,12 @@ defmodule PyCellTest do
 
     assert capture_io(run_source) == """
            Run the \"add\" function by running:
-           require PyCell
+           
            PyCell.run(\"add\", <args>)
            """
   end
 
-  test "supplies its custom source" do
+  test "uses a custom python script" do
     custom_source = """
     def sub(a, b):
       return a - b
@@ -46,7 +51,12 @@ defmodule PyCellTest do
 
     escaped_custom_source = Jason.encode!(custom_source)
 
-    assert source == "PyCell.open_port(\"sub\", #{escaped_custom_source})"
+    assert source ==
+             """
+             require PyCell
+             PyCell.open_port(\"sub\", #{escaped_custom_source})
+             """
+             |> String.trim_trailing()
   end
 
   test "running a PyCell works" do
@@ -74,11 +84,9 @@ defmodule PyCellTest do
 
     {_kino, source} = start_smart_cell!(PyCell, %{"default_source" => default_source})
 
-    assert {:ok, _} = Code.eval_string(source)
-
     assert {:error, _} =
              Code.eval_string("""
-             require PyCell
+             #{source}
              PyCell.run("add", [1,2,3])
              """)
   end
@@ -93,11 +101,9 @@ defmodule PyCellTest do
 
     {_kino, source} = start_smart_cell!(PyCell, %{"default_source" => default_source})
 
-    assert {:ok, _} = Code.eval_string(source)
-
     assert {:timeout, _} =
              Code.eval_string("""
-             require PyCell
+             #{source}
              PyCell.run("add", [1,2], 200)
              """)
   end

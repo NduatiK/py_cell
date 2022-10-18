@@ -56,6 +56,7 @@ defmodule PyCell do
   @impl true
   def to_source(attrs) do
     quote do
+      require PyCell
       PyCell.open_port(unquote(attrs["function_name"]), unquote(attrs["python_code"]))
     end
     |> Kino.SmartCell.quoted_to_string()
@@ -95,7 +96,6 @@ defmodule PyCell do
       """
       Run the \"#{function_name}\" function by running:
 
-      require PyCell
       PyCell.run(\"#{function_name}\", <args>)
       """
       |> String.trim()
