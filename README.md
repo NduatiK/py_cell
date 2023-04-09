@@ -8,11 +8,9 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `py_cell` to your list of dependencies in `mix.exs`:
 
 ```elixir
-def deps do
-  [
-    {:py_cell, "~> 0.1.0"}
-  ]
-end
+Mix.install([
+  {:py_cell, github: "NduatiK/py_cell"}
+])
 ```
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
