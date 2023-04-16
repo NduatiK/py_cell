@@ -21,7 +21,7 @@ defmodule PyCell.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:kino, "~> 0.7.0"},
+      {:kino, ">= 0.7.0"},
       {:jason, "~> 1.4"}
     ]
   end
