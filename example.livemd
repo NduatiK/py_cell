@@ -1,16 +1,17 @@
-# Untitled notebook
+# PyCell Example
 
 ```elixir
 Mix.install([
-  {:py_cell, path: "~/py_cell"}
+  {:py_cell, github: "NduatiK/py_cell"}
 ])
 ```
 
 ## Section
 
-<!-- livebook:{"attrs":{"function_name":"add","python_code":"def add(a, b):\n  return a + b"},"kind":"Elixir.PyCell","livebook_object":"smart_cell"} -->
+<!-- livebook:{"attrs":"eyJmdW5jdGlvbl9uYW1lIjoiYWRkIiwicHl0aG9uX2NvZGUiOiJkZWYgYWRkKGEsIGIpOlxuICByZXR1cm4gYSArIGIifQ","chunks":null,"kind":"Elixir.PyCell","livebook_object":"smart_cell"} -->
 
 ```elixir
+require PyCell
 PyCell.open_port("add", "def add(a, b):\n  return a + b")
 ```
 
@@ -19,9 +20,10 @@ require PyCell
 PyCell.run("add", [1, 2])
 ```
 
-<!-- livebook:{"attrs":{"function_name":"sub","python_code":"def sub(a, b):\n  return a - b\n"},"kind":"Elixir.PyCell","livebook_object":"smart_cell"} -->
+<!-- livebook:{"attrs":"eyJmdW5jdGlvbl9uYW1lIjoic3ViIiwicHl0aG9uX2NvZGUiOiJkZWYgc3ViKGEsIGIpOlxuICByZXR1cm4gYSAtIGJcbiJ9","chunks":null,"kind":"Elixir.PyCell","livebook_object":"smart_cell"} -->
 
 ```elixir
+require PyCell
 PyCell.open_port("sub", "def sub(a, b):\n  return a - b\n")
 ```
 
