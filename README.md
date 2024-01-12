@@ -2,6 +2,8 @@
 
 Easily shell out work to Python from your Elixir notebook.
 
+![image](https://github.com/NduatiK/py_cell/assets/28830783/0d3b2336-bc69-4869-9567-24d999f7f72b)
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
