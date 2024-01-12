@@ -35,8 +35,8 @@ defmodule PyCellTest do
 
     assert capture_io(run_source) == """
            Run the \"add\" function by running:
-           
-           PyCell.run(\"add\", <args>)
+
+           PyCell.run(\"add\", [arg1, arg2])
            """
   end
 
@@ -84,7 +84,7 @@ defmodule PyCellTest do
 
     {_kino, source} = start_smart_cell!(PyCell, %{"default_source" => default_source})
 
-    assert {:error, _} =
+    assert {{:error, "add() takes 2 positional arguments but 3 were given"}, _} =
              Code.eval_string("""
              #{source}
              PyCell.run("add", [1,2,3])

@@ -123,8 +123,12 @@ defmodule PyCell do
           Port.command(port, [unquote(args) |> Jason.encode!(), "\n"])
 
           receive do
-            {^port, {:data, "\":error\""}} ->
-              :error
+            {^port, {:data, "[\"__:error__\", \"" <> _ = error_result}} ->
+              [_, error_msg] =
+                String.trim(error_result)
+                |> Jason.decode!()
+
+              {:error, error_msg}
 
             {^port, {:data, result}} ->
               String.trim(result)
@@ -193,8 +197,7 @@ defmodule PyCell do
           write_result(output_f, result)
         except Exception as err:
           sys.stderr.write(f"PyCell Error: {err}\\n")
-          write_result(output_f, ":error")
-
+          write_result(output_f, ["__:error__", f"{err}"])
     """
     |> String.split("\n")
     |> Enum.map(&String.trim_trailing/1)
