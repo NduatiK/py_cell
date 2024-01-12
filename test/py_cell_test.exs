@@ -36,7 +36,7 @@ defmodule PyCellTest do
     assert capture_io(run_source) == """
            Run the \"add\" function by running:
 
-           PyCell.run(\"add\", [arg1, arg2])
+           PyCell.run(\"add\", [arg1, arg2, ...])
            """
   end
 

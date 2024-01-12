@@ -96,7 +96,7 @@ defmodule PyCell do
       """
       Run the \"#{function_name}\" function by running:
 
-      PyCell.run(\"#{function_name}\", [arg1, arg2])
+      PyCell.run(\"#{function_name}\", [arg1, arg2, ...])
       """
       |> String.trim()
     )
