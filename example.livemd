@@ -16,7 +16,6 @@ PyCell.open_port("add", "def add(a, b):\n  return a + b")
 ```
 
 ```elixir
-require PyCell
 PyCell.run("add", [1, 2])
 ```
 
@@ -46,7 +45,7 @@ require PyCell
 PyCell.open_port("error", "def error(a, b):\n  return a + b + c\n")
 ```
 
-Running the following code will produce a Python error. If you check the libeconsole, you will see:
+Running the following code will produce a Python error.
 
 ```elixir
 PyCell.run("error", [1, 2])
@@ -54,7 +53,7 @@ PyCell.run("error", [1, 2])
 
 ## Is it fast?
 
-No, not at all. In the simple benchmark below, subtracting 100K numbers in Python takes 300x longer than in Elixir. So this only makes sense when the operations would be much faster in Python.
+No, not at all. In the simple benchmark below, subtracting 100K numbers through Python takes 300x longer than in Elixir. So this only makes sense when the operations would be much faster in Python.
 
 A great place for this is when doing matrix multiplication. Numpy is sometimes faster than Nx and can handle numpy archives that contain strings.
 
