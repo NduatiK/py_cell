@@ -84,7 +84,7 @@ defmodule PyCellTest do
 
     {_kino, source} = start_smart_cell!(PyCell, %{"default_source" => default_source})
 
-    assert {{:error, "add() takes 2 positional arguments but 3 were given"}, _} =
+    assert {{:error, "TypeError: add() takes 2 positional arguments but 3 were given"}, _} =
              Code.eval_string("""
              #{source}
              PyCell.run("add", [1,2,3])

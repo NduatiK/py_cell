@@ -153,6 +153,7 @@ defmodule PyCell do
     import sys
     import os
     from struct import unpack, pack
+    import traceback
 
     def setup_io():
         return os.fdopen(3,"rb"), os.fdopen(4,"wb")
@@ -197,7 +198,8 @@ defmodule PyCell do
           write_result(output_f, result)
         except Exception as err:
           sys.stderr.write(f"PyCell Error: {err}\\n")
-          write_result(output_f, ["__:error__", f"{err}"])
+          err_type = type(err).__name__
+          write_result(output_f, ["__:error__", f"{err_type}: {err}"])
           if isinstance(err, BrokenPipeError):
             break
     """
