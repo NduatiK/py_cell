@@ -198,6 +198,8 @@ defmodule PyCell do
         except Exception as err:
           sys.stderr.write(f"PyCell Error: {err}\\n")
           write_result(output_f, ["__:error__", f"{err}"])
+          if isinstance(err, BrokenPipeError):
+            break
     """
     |> String.split("\n")
     |> Enum.map(&String.trim_trailing/1)
