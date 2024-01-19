@@ -12,7 +12,13 @@ Mix.install([
 
 ```elixir
 require PyCell
-PyCell.open_port("add", "def add(a, b):\n  return a + b")
+
+code = """
+def add(a, b):
+  return a + b
+"""
+
+PyCell.open_port("add", code)
 ```
 
 ```elixir
@@ -21,15 +27,29 @@ PyCell.run("add", [1, 2])
 
 ## A more complex example
 
-<!-- livebook:{"attrs":"eyJmdW5jdGlvbl9uYW1lIjoic3ViIiwicHl0aG9uX2NvZGUiOiIjIFlvdSBjYW4gZGVmaW5lIGNsYXNzZXNcbmNsYXNzIFN1YnRyYWN0ZXI6XG4gIGRlZiBfX2luaXRfXyhzZWxmKTpcbiAgICBzZWxmLnplcm8gPSAwXG5cbiAgZGVmIHN1YihzZWxmLCBhLCBiKTpcbiAgICByZXR1cm4gYSAtIGIgKyBzZWxmLnplcm9cblxuIyBZb3UgY2FuIGRlZmluZSBnbG9iYWxzXG5zdWJ0cmFjdGVyID0gU3VidHJhY3RlcigpXG5cbiMgT25seSBgYWRkYCB3aWxsIGJlIGV4cG9zZWRcbmRlZiBzdWIoYSwgYik6XG4gIHJldHVybiBzdWJ0cmFjdGVyLnN1YihhLCBiKVxuIn0","chunks":null,"kind":"Elixir.PyCell","livebook_object":"smart_cell"} -->
+<!-- livebook:{"attrs":"eyJmdW5jdGlvbl9uYW1lIjoic3ViIiwicHl0aG9uX2NvZGUiOiIjIFlvdSBjYW4gZGVmaW5lIGNsYXNzZXNcbmNsYXNzIFN1YnRyYWN0ZXI6XG4gIGRlZiBfX2luaXRfXyhzZWxmKTpcbiAgICBzZWxmLnplcm8gPSAwXG5cbiAgZGVmIHN1YihzZWxmLCBhLCBiKTpcbiAgICByZXR1cm4gYSAtIGIgKyBzZWxmLnplcm9cblxuIyBZb3UgY2FuIGRlZmluZSBnbG9iYWxzXG5zdWJ0cmFjdGVyID0gU3VidHJhY3RlcigpXG5cbiMgT25seSBgc3ViYCB3aWxsIGJlIGV4cG9zZWRcbmRlZiBzdWIoYSwgYik6XG4gIHJldHVybiBzdWJ0cmFjdGVyLnN1YihhLCBiKVxuIn0","chunks":null,"kind":"Elixir.PyCell","livebook_object":"smart_cell"} -->
 
 ```elixir
 require PyCell
 
-PyCell.open_port(
-  "sub",
-  "# You can define classes\nclass Subtracter:\n  def __init__(self):\n    self.zero = 0\n\n  def sub(self, a, b):\n    return a - b + self.zero\n\n# You can define globals\nsubtracter = Subtracter()\n\n# Only `add` will be exposed\ndef sub(a, b):\n  return subtracter.sub(a, b)\n"
-)
+code = """
+# You can define classes
+class Subtracter:
+  def __init__(self):
+    self.zero = 0
+
+  def sub(self, a, b):
+    return a - b + self.zero
+
+# You can define globals
+subtracter = Subtracter()
+
+# Only `sub` will be exposed
+def sub(a, b):
+  return subtracter.sub(a, b)
+"""
+
+PyCell.open_port("sub", code)
 ```
 
 ```elixir
@@ -42,7 +62,13 @@ PyCell.run("sub", [1, 3])
 
 ```elixir
 require PyCell
-PyCell.open_port("error", "def error(a, b):\n  return a + b + c\n")
+
+code = """
+def error(a, b):
+  return a + b + c
+"""
+
+PyCell.open_port("error", code)
 ```
 
 Running the following code will produce a Python error.
