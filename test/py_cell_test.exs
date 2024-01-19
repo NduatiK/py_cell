@@ -16,14 +16,19 @@ defmodule PyCellTest do
 
     {_kino, source} = start_smart_cell!(PyCell, %{})
 
-    escaped_default_source = Jason.encode!(default_source)
+    expected_source = """
+    require PyCell
 
-    assert source ==
-             """
-             require PyCell
-             PyCell.open_port("add", #{escaped_default_source})
-             """
-             |> String.trim_trailing()
+    code = \"\"\"
+    def add(a, b):
+      return a + b
+    \"\"\"
+
+    PyCell.open_port(\"add\", code)
+    """
+    |> String.trim_trailing()
+
+    assert source == expected_source
   end
 
   test "gives instructions to the user" do
@@ -51,12 +56,21 @@ defmodule PyCellTest do
 
     escaped_custom_source = Jason.encode!(custom_source)
 
-    assert source ==
-             """
-             require PyCell
-             PyCell.open_port(\"sub\", #{escaped_custom_source})
-             """
-             |> String.trim_trailing()
+    expected =
+      """
+      require PyCell
+
+      code = \"\"\"
+      def sub(a, b):
+        return a - b
+      \"\"\"
+
+      PyCell.open_port(\"sub\", code)
+      """
+      |> String.trim_trailing()
+
+
+    assert source == expected
   end
 
   test "running a PyCell works" do

@@ -55,11 +55,20 @@ defmodule PyCell do
 
   @impl true
   def to_source(attrs) do
-    quote do
-      require PyCell
-      PyCell.open_port(unquote(attrs["function_name"]), unquote(attrs["python_code"]))
-    end
-    |> Kino.SmartCell.quoted_to_string()
+    code = attrs["python_code"]
+    |> String.trim_trailing()
+    function_name = attrs["function_name"]
+    """
+    require PyCell
+    
+    code = \"\"\"
+    __CODE__
+    \"\"\"
+
+    PyCell.open_port("#{function_name}", code)
+    """
+    |> String.replace("__CODE__",code)
+    |> String.trim_trailing()
   end
 
   def open_port(function_name, python_code) do
