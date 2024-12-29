@@ -175,7 +175,8 @@ defmodule PyCell do
 
         header = input_f.read(4)
         if len(header) != 4:
-            return None  # EOF
+            # EOF
+            sys.exit("Elixir is dead, terminating") 
         # print("header", header)
 
         (total_msg_size,) = unpack("!I", header)
